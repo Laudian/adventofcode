@@ -13,8 +13,7 @@ class PasswordPolicyPair(object):
         return ((self.min <= count <= self.max))
 
     def isValid2(self):
-        string = self.password[self.min-1]+self.password[self.max-1]
-        return string.count(self.letter) == 1
+        return (self.password[self.min-1] == self.letter) != (self.password[self.max-1] == self.letter)
 
     def __repr__(self):
         return str(self.min) + " " + str(self.max) + " " + self.letter + " " + self.password + " " + str(self.isValid())
