@@ -9,9 +9,9 @@ def findTwo(target, data):
     return False
 
 def findThree(target, data):
-    for value in data:
+    for index, value in enumerate(data):
         difference = target - value
-        result = findTwo(difference, data)
+        result = findTwo(difference, data[index:])
         if result:
             return value * result
 
