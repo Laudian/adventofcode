@@ -10,7 +10,7 @@ class PasswordPolicyPair(object):
 
     def isValid(self):
         count = self.password.count(self.letter)
-        return ((self.min <= count <= self.max))
+        return self.min <= count <= self.max
 
     def isValid2(self):
         return (self.password[self.min-1] == self.letter) != (self.password[self.max-1] == self.letter)
