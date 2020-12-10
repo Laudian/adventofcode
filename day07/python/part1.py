@@ -29,10 +29,9 @@ def parents(colorp):
             bags.append(color)
 
 bags = []
-to_process = []
+to_process = ["shiny gold bag"]
 
 
-parents("shiny gold bag")
 while len(to_process) > 0:
     parents(to_process.pop())
 
