@@ -1,5 +1,3 @@
-import enum
-
 with open("../input.txt") as file:
     data = [line.strip("\n") for line in file.readlines()]
 
@@ -37,20 +35,12 @@ class Coordinate(object):
 
 
 
-
-class Direction(enum.Enum):
-    NORTH = Coordinate(0, 1)
-    EAST = Coordinate(1, 0)
-    SOUTH = Coordinate(0, -1)
-    WEST = Coordinate(-1, 0)
-
-
 dirs = \
     {
-        "N" : Direction.NORTH,
-        "E" : Direction.EAST,
-        "S" : Direction.SOUTH,
-        "W" : Direction.WEST
+        "N" : Coordinate(0, 1),
+        "E" : Coordinate(1, 0),
+        "S" : Coordinate(0, -1),
+        "W" : Coordinate(-1, 0)
     }
 
 
@@ -65,6 +55,6 @@ for line in data:
     elif letter == "F":
         position = position + waypoint * number
     else:
-        waypoint = waypoint + dirs[letter].value * number
+        waypoint = waypoint + dirs[letter] * number
 
 print("Part 2: " + str(abs(position.x) + abs(position.y)))
