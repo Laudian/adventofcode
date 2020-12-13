@@ -24,19 +24,18 @@ print("Part 1: " + str(earliest * id))
 import math
 
 line_nrs = []
-for line in lines:
+schedule = {}
+kongruenzen = []
+
+for index, line in enumerate(lines):
     try:
-        line_nrs.append(int(line))
+        nr = int(line)
+        line_nrs.append(int(nr))
+        schedule[int(nr)] = index
+        kongruenzen.append((nr - schedule[nr]) % nr)
     except:
         pass
 
-schedule = {}
-for nr in line_nrs:
-    schedule[nr] = lines.index(str(nr))
-
-kongruenzen = []
-for nr in line_nrs:
-    kongruenzen.append((nr - schedule[nr]) % nr)
 
 def gcdExtended(a, b):
     # Base Case
