@@ -57,4 +57,5 @@ for line in data:
     else:
         waypoint = waypoint + dirs[letter] * number
 
+print(position)
 print("Part 2: " + str(abs(position.x) + abs(position.y)))
