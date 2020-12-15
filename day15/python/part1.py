@@ -6,7 +6,9 @@ for index, nr in enumerate(data):
     lastnr = nr
 
 for x in range(len(data), 30000000):
-    newnr = (turns[lastnr][-1] - turns[lastnr][-2]) if len(turns[lastnr]) >= 2 else 0
+    if x % 100000 == 0:
+        print(len(turns))
+    newnr = 0 if len(turns[lastnr]) < 2 else (turns[lastnr][-1] - turns[lastnr][-2])
     turns[newnr] = [x] if newnr not in turns else turns[newnr] + [x]
     lastnr = newnr
 
