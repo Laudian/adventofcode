@@ -10,7 +10,10 @@ import re
 
 for line in data:
     left, right = line.split(" => ")
-    produktionen[left] = right
+    if left not in produktionen:
+        produktionen[left] = [right]
+    else:
+        produktionen[left].append(right)
     starts = [m.start() for m in re.finditer(left, target)]
     for start in starts:
         end = start + len(left)
