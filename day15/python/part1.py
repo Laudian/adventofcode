@@ -1,15 +1,26 @@
+import time
+import itertools
+
 data = [13,16,0,12,15,1]
 
-turns = {}
+start = time.time()
+
+lastuse = list(itertools.repeat([], 30000000))
+usecount = [0] * 30000000
+
+print(time.time() - start)
+
 for index, nr in enumerate(data):
-    turns[nr] = [index]
+    lastuse[nr] += [index]
+    usecount[nr] += 1
     lastnr = nr
 
 for x in range(len(data), 30000000):
-    if x % 100000 == 0:
-        print(len(turns))
-    newnr = 0 if len(turns[lastnr]) < 2 else (turns[lastnr][-1] - turns[lastnr][-2])
-    turns[newnr] = [x] if newnr not in turns else turns[newnr] + [x]
-    lastnr = newnr
+    lastnr = 0 if usecount[lastnr] < 2 else (x - 1) - lastuse[lastnr][-2]
+    lastuse[lastnr] += [x]
+    usecount[lastnr] += 1
 
 print("Part 1: " + str(lastnr))
+
+end = time.time()
+print(end - start)
