@@ -48,7 +48,7 @@ print("Part1 : " + str(invalid))
 
 # Part 2
 
-# find the vlaid tickets by removing the invaldi tickets
+# find the valid tickets by removing the invalid tickets
 valid_tickets = [ticket for ticket in tickets if ticket not in invalid_tickets]
 
 fields = len(tickets[0])
@@ -84,6 +84,9 @@ for nr, fit in fits:
     target = [x for x in fit if x not in used][0]
     used.append(target)
     relations[nr] = target
+
+for fit in fits:
+    print(fit)
 
 myticket = [101,179,193,103,53,89,181,139,137,97,61,71,197,59,67,173,199,211,191,131]
 
