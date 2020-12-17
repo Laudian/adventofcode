@@ -23,10 +23,14 @@ class Note(object):
         return False
 
 
+# Create the Notes from input
 [Note(line) for line in notes_data]
 
 with open("tickets.txt") as file:
     tickets = [line.strip("\n").split(",") for line in file.readlines()]
+
+
+# Find the invalid tickets
 
 invalid = 0
 invalid_tickets = []
@@ -44,24 +48,20 @@ print("Part1 : " + str(invalid))
 
 # Part 2
 
+# find the vlaid tickets by removing the invaldi tickets
 valid_tickets = [ticket for ticket in tickets if ticket not in invalid_tickets]
 
-ticketfields = {}
-possible_fits = {}
+fields = len(tickets[0])
 
-for n in range(len(tickets[0])):
-    ticketfields[n] = []
+ticketfields = {n : [] for n in range(fields)}  # contains the input vertically instead of horizontally
+possible_fits = {n : [] for n in range(fields)}  # maps Note to the fields that fit the note
 
+# Reordering the input
 for ticket in valid_tickets:
     for index, value in enumerate(ticket):
         ticketfields[index].append(int(value))
 
-fields = len(ticketfields)
-nrs_per_field = len(ticketfields[0])
-
-for x in range(fields):
-    possible_fits[x] = []
-
+# Check Note against each field to find possible combinations
 for index, note in enumerate(Note.notes):
     for field in possible_fits:
         possible = True
@@ -71,18 +71,19 @@ for index, note in enumerate(Note.notes):
                 break
         if possible: possible_fits[index].append(field)
 
-
+# Turn possible combinations into a list of (key, value) pairs
 fits = [(x, possible_fits[x]) for x in possible_fits]
 
+# Sort by length of value (meaning possible fits)
 fits.sort(key=lambda x: len(x[1]))
 
-used = []
-mydict = {}
+used = [] # fields that have already been assigned to a Note
+relations = {} # stores the definite Note : field relations
 
 for nr, fit in fits:
     target = [x for x in fit if x not in used][0]
     used.append(target)
-    mydict[nr] = target
+    relations[nr] = target
 
 myticket = [101,179,193,103,53,89,181,139,137,97,61,71,197,59,67,173,199,211,191,131]
 
@@ -90,6 +91,6 @@ result = 1
 
 for index, note in enumerate(Note.notes):
     if note.name.startswith("departure"):
-        result *= myticket[mydict[index]]
+        result *= myticket[relations[index]]
 
 print("Part 2: " + str(result))
