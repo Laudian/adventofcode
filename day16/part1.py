@@ -56,7 +56,7 @@ fields = len(tickets[0])
 ticketfields = {n : [] for n in range(fields)}  # contains the input vertically instead of horizontally
 possible_fits = {n : [] for n in range(fields)}  # maps Note to the fields that fit the note
 
-# Reordering the input
+# Reordering the input vertically
 for ticket in valid_tickets:
     for index, value in enumerate(ticket):
         ticketfields[index].append(int(value))
