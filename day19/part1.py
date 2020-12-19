@@ -51,7 +51,7 @@ for message in messages:
     if re.match("^" + Rule.rules["0"].getPattern() + "$", message) is not None:
         count += 1
 
-print("Part1: " + str(count))
+print("Part 1: " + str(count))
 
 # Part 2
 
@@ -79,4 +79,4 @@ for message in messages:
     if match(message):
         count += 1
 
-print("Part2: " + str(count))
+print("Part 2: " + str(count))
