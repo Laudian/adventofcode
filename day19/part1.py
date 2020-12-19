@@ -59,7 +59,7 @@ def matchEnd(end, max_matches):
     pattern = "^" + Rule.rules["31"].getPattern() + "{1," + str(max_matches) + "}" + "$"
     return False if re.match(pattern, end) is None else True
 
-# Since every repetition of rule 42 adds at least one character, it can repeat no more than this
+# Since every repetition of rule 42 adds at least four characters, it can repeat no more than this
 upper_limit = len(max(messages)) / 4
 
 def match(string):
