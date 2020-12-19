@@ -60,7 +60,7 @@ def matchEnd(end, max_matches):
     return False if re.match(pattern, end) is None else True
 
 # Since every repetition of rule 42 adds at least one character, it can repeat no more than this
-upper_limit = len(max(messages))
+upper_limit = len(max(messages)) / 4
 
 def match(string):
     n = 2 # Rule 8 matches 42 at least once, rule 11 matches 42 at least once which means at least 2 matches
