@@ -51,11 +51,32 @@ for message in messages:
     if re.match("^" + Rule.rules["0"].getPattern() + "$", message) is not None:
         count += 1
 
-print(count)
-print(Rule.rules["42"].getPattern())
-print(Rule.rules["31"].getPattern())
+print("Part1: " + str(count))
 
 # Part 2
 
-# Rule.rules["8"].pattern = "(" + Rule.rules["42"].getPattern() + "+" + ")"
-# Rule.rules["11"].pattern =
+def matchEnd(end, max_matches):
+    pattern = "^" + Rule.rules["31"].getPattern() + "{1," + str(max_matches) + "}" + "$"
+    return False if re.match(pattern, end) is None else True
+
+# Since every repetition of rule 42 adds at least one character, it can repeat no more than this
+upper_limit = len(max(messages))
+
+def match(string):
+    n = 2 # Rule 8 matches 42 at least once, rule 11 matches 42 at least once which means at least 2 matches
+    while n <= upper_limit:
+        pattern = "^" + n * Rule.rules["42"].getPattern()
+        partial_match = re.match(pattern, string)
+        if partial_match is not None:
+            end = string[partial_match.span()[1]:]
+            if matchEnd(end, n-1):
+                return True
+        n += 1
+    return False
+
+count = 0
+for message in messages:
+    if match(message):
+        count += 1
+
+print("Part2: " + str(count))
