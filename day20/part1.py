@@ -17,7 +17,7 @@ class Tile(object):
 
         self.tiles = []
         for n in range(4):
-            rotated = Tile.rotateClockwise(tile, n)
+            rotated = tuple(Tile.rotateClockwise(tile, n))
             reverse = tuple(reversed(rotated))
             self.tiles.append(rotated)
             self.tiles.append(reverse)
@@ -42,7 +42,7 @@ class Tile(object):
         elif nr == 1:
             return list(zip(*tile[::-1]))
         else:
-            return Tile.rotateClockwise(tile, nr-1)
+            return list(zip(*Tile.rotateClockwise(tile, nr-1)[::-1]))
 
     def __repr__(self):
         return self.name
