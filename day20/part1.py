@@ -1,4 +1,4 @@
-import math
+import math, re
 
 class Tile(object):
     tiles = {}
@@ -141,8 +141,55 @@ for x in range(size):
 
 columns = []
 for x in range(size):
-    column = []
+    columns.append([])
     for y in range(size):
-        column += grid[y][0]
+        columns[x] += grid[y][x]
 
-[print(line) for line in picture]
+picture = []
+for y in range(len(columns[0])):
+    picture.append([])
+    for x in range(len(columns)):
+        picture[y] += columns[x][y]
+
+
+class Coord2D(tuple):
+    def __init__(self, coords):
+        self.x = coords[0]
+        self.y = coords[1]
+        return
+
+    def __add__(self, other):
+        x = self.x + other.x
+        y = self.y + other.y
+        return Coord2D((x, y))
+
+    def __hash__(self):
+        return hash((self.x, self.y))
+
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y
+
+# Open Monster file
+monster_coords = []
+with open("monster.txt") as file:
+    for index, line in enumerate(file):
+        monster_width = len(line)
+        monster_height = index+1
+        coords = [m.start() for m in re.finditer("#", line)]
+        for coord in coords:
+            monster_coords.append(Coord2D((coord, index)))
+
+
+def countMonsters(pattern):
+    count = 0
+    for x in range(len(pattern[0]) - (monster_width - 1)):
+        for y in range(len(picture) - (monster_height - 1)):
+            start = Coord2D((x, y))
+            tags = [start + coord for coord in monster_coords]
+            for coord in tags:
+                if pattern[coord.y][coord.x] != "#":
+                    break
+            count += 1
+    return count
+
+print(countMonsters(picture))
