@@ -88,7 +88,7 @@ def fillRight(index):
 
 
 
-with open("example.txt") as file:
+with open("input.txt") as file:
     data = file.read()
 
 # Create Tiles
@@ -183,13 +183,27 @@ with open("monster.txt") as file:
 def countMonsters(pattern):
     count = 0
     for x in range(len(pattern[0]) - (monster_width - 1)):
-        for y in range(len(picture) - (monster_height - 1)):
+        for y in range(len(pattern) - (monster_height - 1)):
             start = Coord2D((x, y))
             tags = [start + coord for coord in monster_coords]
+            monster = True
             for coord in tags:
                 if pattern[coord.y][coord.x] != "#":
+                    monster = False
                     break
-            count += 1
+            count += monster
     return count
 
-print(countMonsters(picture))
+tagcount = 0
+for line in picture:
+    for char in line:
+        tagcount += char == "#"
+
+for x in range(4):
+    rotated = Tile.rotateClockwise(picture, x)
+    mirrored = list(reversed(rotated))
+    monstercount = countMonsters(rotated)
+    monstercount = countMonsters(mirrored
+                                 )
+print(monstercount)
+print(tagcount - monstercount*len(monster_coords))
