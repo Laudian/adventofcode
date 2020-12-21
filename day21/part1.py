@@ -3,7 +3,7 @@ with open("input.txt") as file:
 
 # Maps allergens to all the ingredients they may be contained in
 ingredient_count = {}
-allergen_to_ingredient = {}
+allergen_to_ingredients = {}
 all_ingredients = []
 for line in data:
     ingredients, allergens = line.split(" (contains ")
@@ -11,10 +11,10 @@ for line in data:
     allergens = allergens.split(", ")
 
     for allergen in allergens:
-        if allergen not in allergen_to_ingredient:
-            allergen_to_ingredient[allergen] = set(ingredients)
+        if allergen not in allergen_to_ingredients:
+            allergen_to_ingredients[allergen] = set(ingredients)
         else:
-            allergen_to_ingredient[allergen] = allergen_to_ingredient[allergen].intersection(set(ingredients))
+            allergen_to_ingredients[allergen] = allergen_to_ingredients[allergen].intersection(set(ingredients))
 
     all_ingredients += ingredients
     all_ingredients = list(set(all_ingredients))
@@ -23,7 +23,7 @@ for line in data:
         ingredient_count[ingredient] = ingredient_count.get(ingredient, 0) + 1
 
 unused_ingredients = set(all_ingredients)
-for allergen, ingredients in allergen_to_ingredient.items():
+for allergen, ingredients in allergen_to_ingredients.items():
     for ingredient in ingredients:
         unused_ingredients.discard(ingredient)
 
@@ -33,16 +33,16 @@ print("Part 1: " + str(unused_count))
 # Part 2
 result = []
 # As longs as we have not found the specific ingredient for one allergen:
-while allergen_to_ingredient:
+while allergen_to_ingredients:
     # Check all allergens to find one that has only one possible ingredient listed
-    for allergen, ingredients in allergen_to_ingredient.items():
+    for allergen, ingredients in allergen_to_ingredients.items():
         if len(ingredients) == 1:
             ingredient = ingredients.pop()
             result.append((ingredient, allergen))
             # remove this allergen from the dict
-            del allergen_to_ingredient[allergen]
+            del allergen_to_ingredients[allergen]
             # Remove the ingredient we found from all other allergens
-            for value in allergen_to_ingredient.values():
+            for value in allergen_to_ingredients.values():
                 value.discard(ingredient)
             break
 
