@@ -1,4 +1,4 @@
-with open("input.txt") as file:
+with open("input_josua.txt") as file:
     data = [line.strip("\n").strip(")") for line in file]
 
 # Maps allergens to all the ingredients they may be contained in
@@ -7,14 +7,14 @@ allergen_to_ingredients = {}
 all_ingredients = []
 for line in data:
     ingredients, allergens = line.split(" (contains ")
-    ingredients = ingredients.split()
+    ingredients = set(ingredients.split())
     allergens = allergens.split(", ")
 
     for allergen in allergens:
         if allergen not in allergen_to_ingredients:
-            allergen_to_ingredients[allergen] = set(ingredients)
+            allergen_to_ingredients[allergen] = ingredients
         else:
-            allergen_to_ingredients[allergen] = allergen_to_ingredients[allergen].intersection(set(ingredients))
+            allergen_to_ingredients[allergen] = allergen_to_ingredients[allergen].intersection(ingredients)
 
     all_ingredients += ingredients
     all_ingredients = list(set(all_ingredients))
@@ -49,4 +49,4 @@ while allergen_to_ingredients:
 # Sort result alphabetically by their allergen
 result.sort(key=lambda x: x[1])
 resultstring = "".join([ing + "," for ing, all in result]).strip(",")
-print(resultstring)
+print("Part 2: " + resultstring)
