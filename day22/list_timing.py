@@ -25,8 +25,7 @@ def play(hands):
         # Save this configuration
         configurations.add(configuration)
         # The winner gets both cards
-        hands[winner].append(cards[winner])
-        hands[winner].append(cards[not winner])
+        hands[winner].extend((cards[winner], cards[not winner]))
     return winner
 
 def run():
