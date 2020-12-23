@@ -28,13 +28,12 @@ def run_part1():
         hands[winner].append(cards[not winner])
 
 def play_part2(hands):
-    global all_configs
+    # global all_configs
     configurations = {}
     while hands[0] and hands[1]:
         # Check if configuration is new
         configuration = (tuple(hands[0]), tuple(hands[1]))
         if configuration in configurations:
-            print(len(configurations))
             return 0
         # elif configuration in all_configs:
         #     return all_configs[configuration]
@@ -58,13 +57,13 @@ def play_part2(hands):
 def run_part2():
     setup()
     winner = play_part2(hands)
-    print(calcScore(hands[winner]))
+    # print(calcScore(hands[winner]))
 
 setupcode = """
 from __main__ import run_part1
 from __main__ import run_part2
 """
 
-nr = 1
-# print(timeit.timeit(stmt="print(run_part1())", setup=setupcode, number=nr))
-print(timeit.timeit(stmt="run_part2()", setup=setupcode, number=nr))
+nr = 10000
+# print(timeit.timeit(stmt="run_part1()", setup=setupcode, number=nr)/nr)
+print(timeit.timeit(stmt="run_part1()", setup=setupcode, number=nr)/nr)
