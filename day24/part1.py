@@ -1,4 +1,5 @@
 from collections import defaultdict
+import timeit
 
 def convertDirToXY(dir):
     nw = dir.count("nw")
@@ -20,8 +21,8 @@ def flip(rounds=1):
 
 
     for n in range(rounds):
-        for tile in list(tiles):
-            countNeighbours(*tile)
+        # for tile in list(tiles):
+        #     countNeighbours(*tile)
 
         for key, value in list(tiles.items()):
             black = value[current]
@@ -35,22 +36,28 @@ def flip(rounds=1):
                 value[not current] = black
 
         current = not current
+
+def run():
+    global current, data, tiles
+    with open("input.txt") as file:
+        data = [line.strip() for line in file.readlines()]
+
+    current = False
+    tiles = defaultdict(lambda: [False, False])
+
+    # Part 1
+
+    for line in data:
+        tile = convertDirToXY(line)
+        tiles[tile][current] = not tiles[tile][0]
+
+    print("Part 1: " + str(sum(x[0] for x in tiles.values())))
+
+    # Part 2
+    for tile in list(tiles):
+        countNeighbours(*tile)
+
+    flip(100)
     print("Part 2: " + str(sum(x[current] for x in tiles.values())))
 
-with open("input.txt") as file:
-    data = [line.strip() for line in file.readlines()]
-
-current = False
-tiles = defaultdict(lambda: [False, False])
-
-# Part 1
-
-for line in data:
-    tile = convertDirToXY(line)
-    tiles[tile][current] = not tiles[tile][0]
-
-print("Part 1: " + str(sum(x[0] for x in tiles.values())))
-
-# Part 2
-
-flip(100)
+print(timeit.timeit(stmt="run()", setup="from __main__ import run", number=1))
