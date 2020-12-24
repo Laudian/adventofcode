@@ -11,19 +11,14 @@ def convertDirToXY(dir):
     z = nw - se
     x = e - w - z
     y = ne - sw + z
-    return (x, y)
+    return x, y
 
 def countNeighbours(x, y):
     return sum([tiles[(x+dX, y+dY)][current] for dX, dY in ((0, 1), (1, 0), (1, -1), (0, -1), (-1, 0), (-1, 1))])
 
 def flip(rounds=1):
     global tiles, current
-
-
     for n in range(rounds):
-        # for tile in list(tiles):
-        #     countNeighbours(*tile)
-
         for key, value in list(tiles.items()):
             black = value[current]
             black_neighbours = countNeighbours(*key)
@@ -46,18 +41,16 @@ def run():
     tiles = defaultdict(lambda: [False, False])
 
     # Part 1
-
     for line in data:
         tile = convertDirToXY(line)
         tiles[tile][current] = not tiles[tile][0]
-
     print("Part 1: " + str(sum(x[0] for x in tiles.values())))
 
     # Part 2
     for tile in list(tiles):
         countNeighbours(*tile)
-
     flip(100)
     print("Part 2: " + str(sum(x[current] for x in tiles.values())))
+
 
 print(timeit.timeit(stmt="run()", setup="from __main__ import run", number=1))
