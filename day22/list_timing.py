@@ -1,4 +1,5 @@
 import timeit
+from collections import defaultdict
 
 def play(hands):
     configurations = set()
