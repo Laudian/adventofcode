@@ -67,7 +67,7 @@ Coord convertDirToXY(std::string dir)
     return Coord(x, y);
 }
 
-int countNeighbours(Coord tile, ordered_tiles& tiles, bool current)
+int countNeighbours(const Coord& tile, ordered_tiles& tiles, const bool& current)
 {
     // Nachbarn berechnen
     std::array<Coord, 6> coords =
@@ -81,16 +81,18 @@ int countNeighbours(Coord tile, ordered_tiles& tiles, bool current)
     };
 
     int count = 0;
-    for (auto coord: coords)
+    for (const Coord& coord: coords)
     {
         // Überprüfe, ob Nachbar bereits existiert
         if (tiles.find(coord) != tiles.end())
         {
+//            std::cout << "if" << std::endl;
             count+= tiles[coord][current];
         }
         // Wenn nicht wird der Nachbar weiß erstellt
         else //if (create)
         {
+//            std::cout << "else" << std::endl;
             tiles[coord] = {false, false};
         }
     }
@@ -104,14 +106,14 @@ int main()
 
 
     // Part 1
-    std::ifstream myfile("day24/example.txt");
+    std::ifstream myfile("input.txt");
     for( std::string line; getline( myfile, line ); )
     {
         Coord tile = convertDirToXY(line);
         // Falls die Tile bereits existiert wird die Farbe geflippt
         if (tiles.find(tile) != tiles.end())
         {
-            tiles[tile][current] = not tiles[tile][current];
+            tiles[tile][current] = !tiles[tile][current];
         }
         // Ansonsten wird die Tile mit Farbe schwarz erstellt
         else
@@ -129,12 +131,17 @@ int main()
 
     // Part 2
     // Einmal die Nachbarn aller Tiles erstellen
-    for (auto tile : tiles)
+    std::list<Coord> list;
+    for(auto key_value : tiles)
     {
-        countNeighbours(tile.first, tiles, current);
+        list.emplace_back(key_value.first);
     }
 
-    for (int i=0; i<1; i++)
+    for (Coord tile : list)
+    {
+        countNeighbours(tile, tiles, current);
+    }
+    for (int i=0; i<100; i++)
     {
         // Items aus der Map kopieren
         std::list<Coord> list;
@@ -142,7 +149,6 @@ int main()
         {
             list.emplace_back(key_value.first);
         }
-        std::cout << tiles.size() << std::endl;
 
         for (auto key : list)
         {
