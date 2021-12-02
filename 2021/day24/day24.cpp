@@ -2,7 +2,7 @@
 // Created by Micha on 25.12.2020.
 // test
 
-#include <map>
+#include <tsl/ordered_map.h>
 #include <iostream>
 #include <fstream>
 #include <array>
@@ -38,7 +38,7 @@ struct hash_coord
         }
     };
 
-typedef std::map<Coord, std::array<bool, 2>> ordered_tiles;
+typedef tsl::ordered_map<Coord, std::array<bool, 2>> ordered_tiles;
 //typedef std::map<Coord, std::array<bool, 2>, hash_coord, std::equal_to<>> ordered_tiles;
 
 unsigned int countSubstring(std::string str, std::string sub)
