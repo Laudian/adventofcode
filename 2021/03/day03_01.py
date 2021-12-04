@@ -8,8 +8,8 @@ def transpose(iterable):
 
 def gamma_epsilon(puzzle):
     gamma, epsilon = [], []
-    puzzle_transposed = transpose(puzzle
-                                  )
+    puzzle_transposed = transpose(puzzle)
+    
     for sequence in puzzle_transposed:
         one_count = sequence.count("1")
         zero_count = sequence.count("0")
@@ -22,7 +22,7 @@ def gamma_epsilon(puzzle):
     return gamma_value, epsilon_value
 
 
-def filter_rating(puzzle, oxygen=True):
+def filter_rating(puzzle, element):
     copy = list(puzzle)
     index = 0
 
@@ -32,10 +32,12 @@ def filter_rating(puzzle, oxygen=True):
         one_count = copy_transposed[index].count("1")
         zero_count = copy_transposed[index].count("0")
 
-        if oxygen:
+        if element == "oxygen":
             bit = "1" if one_count >= zero_count else "0"
-        else:
+        elif element == "co2":
             bit = "1" if one_count < zero_count else "0"
+        else:
+            raise ValueError("Element is: " + element + ", must be oxygen or co2.")
 
         for sequence in copy:
             if sequence[index] == bit:
@@ -49,7 +51,7 @@ def filter_rating(puzzle, oxygen=True):
 gamma, epsilon = gamma_epsilon(puzzle)
 print("Part 1: " + str(gamma * epsilon))
 
-oxygen = filter_rating(puzzle)
-co2 = filter_rating(puzzle, oxygen=False)
+oxygen = filter_rating(puzzle, "oxygen")
+co2 = filter_rating(puzzle, "co2")
 
 print("Part 2: " + str(oxygen*co2))
