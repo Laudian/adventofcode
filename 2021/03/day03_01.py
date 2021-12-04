@@ -1,5 +1,5 @@
 with open("input.txt") as file:
-    puzzle = [line.strip("\n") for line in file.readlines()]
+    puzzle = [line.strip("\n") for line in file]
 
 
 def transpose(iterable):
@@ -9,7 +9,7 @@ def transpose(iterable):
 def gamma_epsilon(puzzle):
     gamma, epsilon = [], []
     puzzle_transposed = transpose(puzzle)
-    
+
     for sequence in puzzle_transposed:
         one_count = sequence.count("1")
         zero_count = sequence.count("0")
