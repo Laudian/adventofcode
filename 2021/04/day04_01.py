@@ -9,6 +9,8 @@ class BingoCard(object):
         self.finished = False
 
     def mark(self, nr):
+        if self.finished:
+            return False
         for index, value in enumerate(self.fields):
             if value == nr:
                 self.fields[index] = "x"
@@ -16,8 +18,6 @@ class BingoCard(object):
         return False
 
     def check_winner(self):
-        if self.finished:
-            return False
         for x in range(5):
             # Check row
             row_offset = 5*x
@@ -55,5 +55,7 @@ for nr in numbers:
             else:
                 loser_score = score*nr
 
+# noinspection PyUnboundLocalVariable
 print("Part 1: " + str(winner_score))
+# noinspection PyUnboundLocalVariable
 print("Part 2: " + str(loser_score))
