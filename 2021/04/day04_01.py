@@ -18,7 +18,7 @@ class BingoCard(object):
         return False
 
     def check_winner(self):
-        for x in range(5):
+        for x in range(self.sidelength):
             # Check row
             row_offset = 5*x
             row_count = self.fields[0+row_offset:self.sidelength+row_offset].count("x")
