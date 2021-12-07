@@ -10,14 +10,14 @@ def process(line, board1, board2):
     # Very ugly nested list comprehension to split input and convert to int
     x1, y1, x2, y2 = [int(nr) for nr in line.replace(" -> ", ",").split(",")]
 
-    # Horizontal
+    # Vertical
     if x1 == x2:
         start, stop = sorted((y1, y2))
         for y in range(start, stop+1):
             board1[(x1, y)] += 1
             board2[(x1, y)] += 1
 
-    # Vertical
+    # Horizontal
     elif y1 == y2:
         start, stop = sorted((x1, x2))
         for x in range(start, stop+1):
